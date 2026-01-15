@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 6.0.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BibliographicCatalog" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="834660c5-2d89-422b-b506-b4f8140fee54">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Etendo DB"/>
+	<subDataset name="Authors" uuid="3b004a3a-6445-4bc4-afa2-259b925154cf">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Etendo DB"/>
+		<parameter name="BOOK_ID" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT a.name
+FROM bks_book_author ba
+JOIN bks_author a ON a.bks_author_id = ba.bks_author_id
+WHERE ba.bks_book_id = $P{BOOK_ID}
+]]>
+		</queryString>
+		<field name="name" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="name"/>
+			<property name="com.jaspersoft.studio.field.label" value="name"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="bks_author"/>
+		</field>
+	</subDataset>
+	<subDataset name="Genres" uuid="f4bd8d0f-c32e-4527-b33e-7536d5e2a770">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Etendo DB"/>
+		<parameter name="BOOK_ID" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT g.name
+FROM bks_genre g
+JOIN bks_book_genre bg ON bg.bks_genre_id = g.bks_genre_id
+WHERE bg.bks_book_id = $P{BOOK_ID}
+]]>
+		</queryString>
+		<field name="name" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="name"/>
+			<property name="com.jaspersoft.studio.field.label" value="name"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="bks_genre"/>
+		</field>
+	</subDataset>
+	<parameter name="BOOK_ID" class="java.lang.String" isForPrompting="false"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT 
+    b.bks_book_id,
+    b.title,
+    b.subtitle,
+    b.description,
+    b.publication_date,
+    b.volume_number,
+    b.isactive,
+    s.name AS series_name
+FROM bks_book b
+LEFT JOIN bks_series s ON b.bks_series_id = s.bks_series_id
+ORDER BY b.title;]]>
+	</queryString>
+	<field name="bks_book_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bks_book_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="bks_book_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book"/>
+	</field>
+	<field name="title" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="title"/>
+		<property name="com.jaspersoft.studio.field.label" value="title"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book"/>
+	</field>
+	<field name="subtitle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="subtitle"/>
+		<property name="com.jaspersoft.studio.field.label" value="subtitle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book"/>
+	</field>
+	<field name="description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="description"/>
+		<property name="com.jaspersoft.studio.field.label" value="description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book"/>
+	</field>
+	<field name="publication_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="publication_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="publication_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book"/>
+	</field>
+	<field name="volume_number" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="volume_number"/>
+		<property name="com.jaspersoft.studio.field.label" value="volume_number"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book"/>
+	</field>
+	<field name="isactive" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="isactive"/>
+		<property name="com.jaspersoft.studio.field.label" value="isactive"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book"/>
+	</field>
+	<field name="series_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="series_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="series_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_series"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="117" y="14" width="320" height="51" uuid="27d6bb31-58c7-48c0-a513-aa1067e86d01"/>
+				<textElement>
+					<font size="29"/>
+				</textElement>
+				<text><![CDATA[Bibliographic Catalog]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="261" splitType="Stretch">
+			<textField>
+				<reportElement x="204" y="0" width="340" height="30" uuid="ede930c9-336f-41d9-83e9-90ca16031fd1"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="0" width="80" height="30" uuid="c187872b-9bee-4efe-a4e6-09f4336768ae"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<text><![CDATA[Title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="30" width="80" height="30" uuid="c2bbb9c9-03ef-4b1b-8156-c8ebb80b95c1"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<text><![CDATA[Subtitle]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="204" y="30" width="340" height="30" uuid="236b0ba1-3b6e-4a2f-9b5d-145f6ca85bc8"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subtitle}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="60" width="150" height="30" uuid="74ae1771-4369-41c2-a514-f9c7dc7ab763"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<text><![CDATA[Publication Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="90" width="80" height="30" uuid="6d5b28ad-ac24-48e0-9330-a78d46641ed0"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<text><![CDATA[Series]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="120" width="140" height="30" uuid="bafb5569-fe17-43fd-b9d3-3f63cbd0e133"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<text><![CDATA[Volume number]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="204" y="60" width="340" height="30" uuid="a40d91ec-557e-4b60-891b-da90c8f16ebf"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{publication_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="204" y="90" width="340" height="30" uuid="620ffb63-e4e6-4d89-aa0e-529be523b8e6"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{series_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="204" y="120" width="340" height="30" uuid="a43c93af-b969-4127-b07d-1d57410c30f5"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{volume_number}]]></textFieldExpression>
+			</textField>a
+			<componentElement>
+				<reportElement x="20" y="190" width="220" height="50" uuid="105d6081-02a5-48bc-b8a6-7484940d9507"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Authors" uuid="3b8d4c4f-f716-43b9-a275-75c946502273">
+						<datasetParameter name="BOOK_ID">
+							<datasetParameterExpression><![CDATA[$F{bks_book_id}
+]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="50" width="220">
+						<textField>
+							<reportElement x="0" y="0" width="220" height="50" uuid="81e0b790-a442-4f92-95c6-7056cfbb6867"/>
+							<textElement>
+								<font size="19"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="20" y="160" width="100" height="30" uuid="06e35ac6-c397-465a-8719-56fe1b18dff3"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<text><![CDATA[Authors:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="280" y="190" width="170" height="50" uuid="e6bdea76-ca13-4b08-a13b-e9125160e5e8"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Genres" uuid="9a22e348-47e8-434e-ba02-71ec9f42d15e">
+						<datasetParameter name="BOOK_ID">
+							<datasetParameterExpression><![CDATA[$F{bks_book_id}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="50" width="170">
+						<textField>
+							<reportElement x="0" y="0" width="100" height="30" uuid="098533a8-8c1d-447c-87dd-d646be117369"/>
+							<textElement>
+								<font size="19"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="280" y="160" width="100" height="30" uuid="7c3f6cb8-e514-4886-9d5a-6de763c19b88"/>
+				<textElement>
+					<font size="19"/>
+				</textElement>
+				<text><![CDATA[Genres:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

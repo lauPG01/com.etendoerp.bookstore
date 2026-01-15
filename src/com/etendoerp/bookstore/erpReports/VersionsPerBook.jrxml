@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.0.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="VersionsPerBook" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3c8d2cff-db41-4208-a7b0-c4993ab3fd04">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Etendo DB"/>
+	<parameter name="Bks_Book_ID" class="java.lang.String"/>
+	<parameter name="DateFrom" class="java.lang.String"/>
+	<parameter name="DateTo" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BASE_DESIGN" class="java.lang.String" isForPrompting="false"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+  b.bks_book_id,
+  b.title,
+  b.subtitle,
+  b.description,
+  b.publication_date
+FROM bks_book b
+WHERE b.bks_book_id = $P{Bks_Book_ID}]]>
+	</queryString>
+	<field name="bks_book_id" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="bks_book_id"/>
+		<property name="com.jaspersoft.studio.field.label" value="bks_book_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book"/>
+	</field>
+	<field name="title" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="title"/>
+		<property name="com.jaspersoft.studio.field.label" value="title"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book"/>
+	</field>
+	<field name="subtitle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="subtitle"/>
+		<property name="com.jaspersoft.studio.field.label" value="subtitle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book"/>
+	</field>
+	<field name="description" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="description"/>
+		<property name="com.jaspersoft.studio.field.label" value="description"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book"/>
+	</field>
+	<field name="publication_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="publication_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="publication_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="69" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="20" width="171" height="30" uuid="f2cb3483-2c6e-463d-b1fb-44fa853edee6"/>
+				<textElement textAlignment="Left">
+					<font size="20" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Versions per book]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="10" width="555" height="1" uuid="90b84b61-f3ba-447f-b2e8-19f1733da5af"/>
+			</line>
+			<line>
+				<reportElement x="0" y="60" width="555" height="1" uuid="a3fcfa10-0400-4aad-a478-093a4c1296c6"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="0" width="40" height="21" uuid="7c881f3b-8d71-40f6-b1bc-c443180beea8"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Book:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="50" y="0" width="140" height="20" uuid="5ee186ab-4c9b-4b95-9d8d-4bd149b24a4a"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="20" width="70" height="20" uuid="a061aa2f-bbb5-4d37-b41c-caab8b3a7036"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Publication:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="20" width="40" height="20" uuid="0fc91413-ca31-446e-a9f1-e1101d4ab651"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="130" y="20" width="100" height="20" uuid="386e1b08-ce54-4592-b6bd-56e8f49089f2"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DateFrom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="230" y="20" width="20" height="20" uuid="ebc8a8bc-3bd8-44fd-b2b4-608487f46d39"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[To:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="250" y="20" width="110" height="20" uuid="650f7bf7-7bbc-4cfe-b53d-c5e0a16d5079"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{DateTo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="465" y="0" width="90" height="24" uuid="c3453828-785d-4991-a24d-fd88b0e133df"/>
+				<textElement markup="styled">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="47" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="39" uuid="0ff47b2e-32bf-45a0-b3dd-46fe5792acda"/>
+				<subreportParameter name="Bks_Book_ID">
+					<subreportParameterExpression><![CDATA[$P{Bks_Book_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DateFrom">
+					<subreportParameterExpression><![CDATA[$P{DateFrom}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DateTo">
+					<subreportParameterExpression><![CDATA[$P{DateTo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{BASE_DESIGN} + "/com/etendoerp/bookstore/erpReports/BookVersionsSubreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="450" y="7" width="60" height="20" uuid="f26fb225-7219-4fb9-b177-e60b63e6fd70"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="495" y="7" width="60" height="20" uuid="af03d6d0-c73e-4a76-82ed-c14d1f1232f2"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

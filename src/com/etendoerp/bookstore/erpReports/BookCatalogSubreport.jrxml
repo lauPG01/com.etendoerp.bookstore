@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.0.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BookVersionsSubreport" pageWidth="555" pageHeight="802" whenNoDataType="NoPages" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ff64370d-17cd-40b8-9b8a-b337b6c18a8a">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Etendo DB"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#FCFCFC">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="BookVersionsDataset" uuid="624dc06e-3285-4d31-9ea8-279e51473aac">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Etendo DB"/>
+		<parameter name="Bks_Book_ID" class="java.lang.String"/>
+		<parameter name="DateFrom" class="java.lang.String"/>
+		<parameter name="DateTo" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT
+    pub.name AS publisher,
+    l.name   AS language,
+    f.name   AS format,
+    bv.page_count,
+    bv.isbn,
+    bv.release_date,
+    p.value  AS product_code,
+    p.name   AS product_name
+FROM bks_book_version bv
+JOIN bks_publisher pub
+  ON pub.bks_publisher_id = bv.bks_publisher_id
+JOIN ad_language l
+  ON l.ad_language_id = bv.ad_language_id
+LEFT JOIN bks_format f
+  ON f.bks_format_id = bv.bks_format_id
+LEFT JOIN m_product p
+  ON p.m_product_id = bv.m_product_id
+WHERE bv.bks_book_id = $P{Bks_Book_ID}
+  AND trunc(bv.release_date) >= (
+        CASE 
+            WHEN ($P{DateFrom} IS NULL OR $P{DateFrom} = '') 
+            THEN TO_DATE('01-01-0001') 
+            ELSE TO_DATE($P{DateFrom}) 
+        END
+      )
+  AND trunc(bv.release_date) <= (
+        CASE 
+            WHEN ($P{DateTo} IS NULL OR $P{DateTo} = '') 
+            THEN TO_DATE('31-12-9999') 
+            ELSE TO_DATE($P{DateTo}) 
+        END
+      )
+ORDER BY bv.release_date, bv.page_count]]>
+		</queryString>
+		<field name="publisher" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="publisher"/>
+			<property name="com.jaspersoft.studio.field.label" value="publisher"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="bks_publisher"/>
+		</field>
+		<field name="language" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="language"/>
+			<property name="com.jaspersoft.studio.field.label" value="language"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ad_language"/>
+		</field>
+		<field name="format" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="format"/>
+			<property name="com.jaspersoft.studio.field.label" value="format"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="bks_format"/>
+		</field>
+		<field name="page_count" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="page_count"/>
+			<property name="com.jaspersoft.studio.field.label" value="page_count"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="bks_book_version"/>
+		</field>
+		<field name="isbn" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="isbn"/>
+			<property name="com.jaspersoft.studio.field.label" value="isbn"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="bks_book_version"/>
+		</field>
+		<field name="release_date" class="java.sql.Timestamp">
+			<property name="com.jaspersoft.studio.field.name" value="release_date"/>
+			<property name="com.jaspersoft.studio.field.label" value="release_date"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="bks_book_version"/>
+		</field>
+		<field name="product_code" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="product_code"/>
+			<property name="com.jaspersoft.studio.field.label" value="product_code"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="m_product"/>
+		</field>
+		<field name="product_name" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="product_name"/>
+			<property name="com.jaspersoft.studio.field.label" value="product_name"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="m_product"/>
+		</field>
+	</subDataset>
+	<parameter name="Bks_Book_ID" class="java.lang.String"/>
+	<parameter name="DateFrom" class="java.lang.String"/>
+	<parameter name="DateTo" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+    pub.name AS publisher,
+    l.name   AS language,
+    f.name   AS format,
+    bv.page_count,
+    bv.isbn,
+    bv.release_date,
+    p.value  AS product_code,
+    p.name   AS product_name
+FROM bks_book_version bv
+JOIN bks_publisher pub
+  ON pub.bks_publisher_id = bv.bks_publisher_id
+JOIN ad_language l
+  ON l.ad_language_id = bv.ad_language_id
+LEFT JOIN bks_format f
+  ON f.bks_format_id = bv.bks_format_id
+LEFT JOIN m_product p
+  ON p.m_product_id = bv.m_product_id
+WHERE bv.bks_book_id = $P{Bks_Book_ID}
+  AND trunc(bv.release_date) >= (
+        CASE 
+            WHEN ($P{DateFrom} IS NULL OR $P{DateFrom} = '') 
+            THEN TO_DATE('01-01-0001') 
+            ELSE TO_DATE($P{DateFrom}) 
+        END
+      )
+  AND trunc(bv.release_date) <= (
+        CASE 
+            WHEN ($P{DateTo} IS NULL OR $P{DateTo} = '') 
+            THEN TO_DATE('31-12-9999') 
+            ELSE TO_DATE($P{DateTo}) 
+        END
+      )
+ORDER BY bv.release_date, bv.page_count]]>
+	</queryString>
+	<field name="publisher" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="publisher"/>
+		<property name="com.jaspersoft.studio.field.label" value="publisher"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_publisher"/>
+	</field>
+	<field name="language" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="language"/>
+		<property name="com.jaspersoft.studio.field.label" value="language"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ad_language"/>
+	</field>
+	<field name="format" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="format"/>
+		<property name="com.jaspersoft.studio.field.label" value="format"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_format"/>
+	</field>
+	<field name="page_count" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="page_count"/>
+		<property name="com.jaspersoft.studio.field.label" value="page_count"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book_version"/>
+	</field>
+	<field name="isbn" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="isbn"/>
+		<property name="com.jaspersoft.studio.field.label" value="isbn"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book_version"/>
+	</field>
+	<field name="release_date" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="release_date"/>
+		<property name="com.jaspersoft.studio.field.label" value="release_date"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="bks_book_version"/>
+	</field>
+	<field name="product_code" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="product_code"/>
+		<property name="com.jaspersoft.studio.field.label" value="product_code"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="m_product"/>
+	</field>
+	<field name="product_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="product_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="product_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="m_product"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="61">
+			<componentElement>
+				<reportElement style="Table_TD" stretchType="RelativeToTallestObject" x="0" y="0" width="555" height="60" isRemoveLineWhenBlank="true" uuid="d48c8007-5c81-466f-acf5-28964daffe41">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="NoDataCell">
+					<datasetRun subDataset="BookVersionsDataset" uuid="4ef4b78e-4792-4b1a-9afe-0448751697fe">
+						<datasetParameter name="Bks_Book_ID">
+							<datasetParameterExpression><![CDATA[$P{Bks_Book_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="DateFrom">
+							<datasetParameterExpression><![CDATA[$P{DateFrom}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="DateTo">
+							<datasetParameterExpression><![CDATA[$P{DateTo}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="97" uuid="26b69c2c-359e-4630-ad2c-bfd9173a0342">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="97" height="30" uuid="c1aa0c35-7e76-42cf-b27f-267c574e537e"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="DejaVu Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Publisher]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="97" height="30" uuid="9fcf9782-3f72-4d72-a7fc-ab48b458492c"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="DejaVu Sans"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{publisher}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="97" uuid="76320fd6-d7d5-41bd-8e72-2ded17c7c607">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="97" height="30" uuid="29889c77-c839-42b8-826a-47d0726e3c7d"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font fontName="DejaVu Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Language]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="97" height="30" uuid="8102e46e-22d6-43b4-9e92-d5a552f32b79"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="DejaVu Sans"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{language}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="95" uuid="107b4cf4-1fa6-4da3-8a0d-2f25d9bb830d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="95" height="30" uuid="61256106-79e7-4988-92c2-0d5f2db38acf"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="DejaVu Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Format]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="95" height="30" uuid="7cbfd275-2506-4b5b-a143-8b0d4a92c62a"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="DejaVu Sans"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{format}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="91" uuid="ad7287ab-a257-4527-84cc-2a853359d0a3">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="91" height="30" uuid="f34704e1-f06f-4024-a742-ce182f033418"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="DejaVu Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Page Count]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="91" height="30" uuid="331b6555-2d2b-4044-b947-ab5554612f24"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="DejaVu Sans"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{page_count}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="89" uuid="7041ac46-3b66-4f01-a11c-9392ccfdba8f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="89" height="30" uuid="66075915-9481-4980-9db3-c9aa98abc780"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="DejaVu Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[ISBN]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="89" height="30" uuid="73693d41-1ffd-4d95-b254-0c0975a24b63"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="DejaVu Sans"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{isbn}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="86" uuid="e1e4eb8d-642e-47a2-a825-aae8d038d9a4">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="86" height="30" uuid="0030f0dd-a28d-421a-b0d5-27b0cca9a6e2"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="DejaVu Sans" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Release Date]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField pattern="dd/MM/yyyy">
+								<reportElement x="0" y="0" width="86" height="30" uuid="b13f0ce7-2191-4cef-aad7-acfe4add0279"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="DejaVu Sans"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{release_date}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

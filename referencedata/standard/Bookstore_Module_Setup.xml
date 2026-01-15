@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><ob:Openbravo xmlns:ob="http://www.openbravo.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ProductCategory id="55423065B7CC4B70AB3C4A18DD5655BB" identifier="Book">
+    <id>55423065B7CC4B70AB3C4A18DD5655BB</id>
+    <active>true</active>
+    <searchKey>Book</searchKey>
+    <name>Book</name>
+    <description xsi:nil="true"/>
+    <default>false</default>
+    <plannedMargin>0</plannedMargin>
+    <assetCategory xsi:nil="true"/>
+    <image xsi:nil="true"/>
+    <summaryLevel>false</summaryLevel>
+  </ProductCategory>
+</ob:Openbravo>
